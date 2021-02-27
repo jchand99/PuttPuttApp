@@ -47,14 +47,12 @@ class _HomePageState extends State<HomePage> {
       padding: EdgeInsets.all(8.0),
       itemCount: 5,
       itemBuilder: (context, index) {
-        return Container(
-          color: Colors.blue[200],
-          child: ListTile(
-            title: Text('Scorecard $index'),
-            trailing: Icon(Icons.arrow_forward_ios_rounded),
-            onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ScorecardPage())),
-          ),
+        return ListTile(
+          tileColor: Colors.amber,
+          title: Text('Scorecard $index'),
+          trailing: Icon(Icons.arrow_forward_ios_rounded),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => ScorecardPage())),
         );
       },
       separatorBuilder: (context, index) => const Divider(
