@@ -8,6 +8,24 @@ class ScorecardPage extends StatefulWidget {
 class _ScorecardPageState extends State<ScorecardPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Scorecard'),
+        ),
+        body: _body(context));
+  }
+
+  Widget _body(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text('Hole $index'),
+        );
+      },
+      separatorBuilder: (context, index) => const Divider(
+        color: Colors.white,
+      ),
+      itemCount: 6,
+    );
   }
 }
