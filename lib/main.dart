@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/home.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: ScorecardPage("My Putt Putt Place"),
+      home: HomePage(),
     );
   }
 }
