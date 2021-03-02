@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puttputtapp/pages/scorecard.dart';
+import 'package:puttputtapp/pages/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: ScorecardPage("My Putt Putt Place"),
+          primaryColor: Colors.green[700],
+          accentColor: Colors.green[700],
+          scaffoldBackgroundColor: Colors.grey[300]),
+      home: HomePage(),
     );
   }
 }
