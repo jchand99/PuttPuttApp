@@ -18,7 +18,9 @@ class ScorecardPage extends StatefulWidget {
 
 class _ScorecardPageState extends State<ScorecardPage> {
   final random = Random();
+
   String _title;
+  int _numberOfHoles = 10;
 
   List<Text> _players = [
     Text('Jacob'),
@@ -75,7 +77,11 @@ class _ScorecardPageState extends State<ScorecardPage> {
           // TODO: Eventually this will be a function that creates
           // a new hole in the server and updates the future builder
           // adding the new hole card to the list.
-          onPressed: () => print('Code how to create a new hole'),
+          onPressed: () {
+            setState(() {
+              _numberOfHoles++;
+            });
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [Icon(Icons.golf_course), Icon(Icons.add)],
@@ -99,7 +105,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
       itemBuilder: (context, index) {
         return HoleCard(index + 1, _players, _scores, par: 6);
       },
-      itemCount: 10,
+      itemCount: _numberOfHoles,
     );
   }
 
