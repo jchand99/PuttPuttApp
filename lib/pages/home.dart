@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
+import 'package:puttputtapp/util/nav.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +16,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _cards.removeAt(index);
       _scoreCardAmt--;
+    });
+  }
+
+  void _addCard() {
+    setState(() {
+      _scoreCardAmt++;
+      _cards.add({'cardName': "ScoreCard $_scoreCardAmt"});
     });
   }
 
@@ -67,12 +75,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _body(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _scoreCardAmt++;
-            _cards.add({'cardName': "ScoreCard $_scoreCardAmt"});
-          });
-        },
+        onPressed: _addCard,
         child: Icon(Icons.add),
       ),
     );
@@ -98,22 +101,21 @@ class _HomePageState extends State<HomePage> {
         child: ListTile(
           title: Text(_cards[index]['cardName']),
           trailing: Icon(Icons.arrow_forward_ios_rounded),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ScorecardPage(_cards[index]['cardName']))),
+          onTap: () =>
+              Nav.push(context, ScorecardPage(_cards[index]['cardName'])),
         ),
       );
     } else {
       return Card(
-        elevation: 10,
-        child: ListTile(
-          title: Text(_cards[index]['cardName']),
-          leading: IconButton(
-              icon: Icon(Icons.highlight_remove_outlined),
-              onPressed: () {
-                _removeCard(index);
-              }),
-        )
-      );
+          elevation: 10,
+          child: ListTile(
+            title: Text(_cards[index]['cardName']),
+            leading: IconButton(
+                icon: Icon(Icons.highlight_remove_outlined),
+                onPressed: () {
+                  _removeCard(index);
+                }),
+          ));
     }
   }
 }
