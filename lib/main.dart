@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
+import 'package:puttputtapp/pages/create_edit_scorecard.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        primaryColor: Colors.green[700],
+        accentColor: Colors.green[700],
+        scaffoldBackgroundColor: Colors.grey[300],
       ),
       home: HomePage(),
     );
