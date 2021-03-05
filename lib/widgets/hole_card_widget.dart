@@ -20,7 +20,7 @@ class _HoleCardState extends State<HoleCard> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () => Nav.push(context, HolePage()),
+        onTap: () => Nav.push(context, HolePage(widget._holeNumber)),
         splashColor: Theme.of(context).accentColor,
         child: Container(
           padding: const EdgeInsets.all(8.0),

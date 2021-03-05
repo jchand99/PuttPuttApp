@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puttputtapp/pages/create_edit_scorecard.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
 import 'package:puttputtapp/util/nav.dart';
 
@@ -19,11 +20,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _addCard() {
-    setState(() {
-      _scoreCardAmt++;
-      _cards.add({'cardName': "ScoreCard $_scoreCardAmt"});
+  void _addCard(BuildContext context) {
+    print('Pressed');
+    Nav.push(context, CreateEditScorecardPage('Create'));
+
+    // FIXME: Remove and replace with regular code.
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _scoreCardAmt++;
+        _cards.add({'cardName': "ScoreCard $_scoreCardAmt"});
+      });
     });
+    // setState(() {
+    //   _scoreCardAmt++;
+    //   _cards.add({'cardName': "ScoreCard $_scoreCardAmt"});
+    // });
   }
 
   void _editScoreCards() {
@@ -75,7 +86,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _body(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addCard,
+        onPressed: () => _addCard(context),
         child: Icon(Icons.add),
       ),
     );

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:puttputtapp/pages/create_edit_scorecard.dart';
+import 'package:puttputtapp/pages/hole.dart';
 import 'package:puttputtapp/util/nav.dart';
 import 'package:puttputtapp/widgets/hole_card_widget.dart';
 import 'package:puttputtapp/widgets/player_score_widget.dart';
@@ -20,26 +21,27 @@ class _ScorecardPageState extends State<ScorecardPage> {
   final random = Random();
 
   String _title;
-  int _numberOfHoles = 10;
+  int _numberOfHoles = 0;
 
   List<Text> _players = [
     Text('Jacob'),
     Text('Alex'),
     Text('Roselyn'),
     Text('Jackson'),
-    Text('Bob'),
-    Text('Phil'),
-    Text('Phrank'),
   ];
 
   List<Text> _scores = [
-    Text('7'),
-    Text('3'),
-    Text('4'),
-    Text('5'),
-    Text('4'),
+    Text('0'),
+    Text('0'),
+    Text('0'),
+    Text('0'),
+  ];
+
+  List<Text> _newScores = [
+    Text('1'),
     Text('2'),
-    Text('9')
+    Text('3'),
+    Text('7'),
   ];
 
   @override
@@ -66,7 +68,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () => Nav.push(context, CreateEditScorecardPage()),
+            onPressed: () => Nav.push(context, CreateEditScorecardPage('Edit')),
           )
         ],
       ),
@@ -74,13 +76,18 @@ class _ScorecardPageState extends State<ScorecardPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 125.0),
         child: FloatingActionButton(
-          // TODO: Eventually this will be a function that creates
-          // a new hole in the server and updates the future builder
-          // adding the new hole card to the list.
           onPressed: () {
-            setState(() {
-              _numberOfHoles++;
+            // FIXME: Replace with regular code.
+            Nav.push(context, HolePage(_numberOfHoles + 1));
+            Future.delayed(const Duration(seconds: 3), () {
+              setState(() {
+                _numberOfHoles++;
+                _scores = _newScores;
+              });
             });
+            // setState(() {
+            //   _numberOfHoles++;
+            // });
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +129,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
         itemBuilder: (context, index) {
           return PlayerScore(
               _players[index],
-              random.nextInt(35),
+              _scores[index],
               Color.fromARGB(255, random.nextInt(255), random.nextInt(255),
                   random.nextInt(255)));
         },
