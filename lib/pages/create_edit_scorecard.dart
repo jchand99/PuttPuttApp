@@ -6,6 +6,10 @@ import 'dart:math';
 import 'package:puttputtapp/util/nav.dart';
 
 class CreateEditScorecardPage extends StatefulWidget {
+  CreateEditScorecardPage(this._title, {Key key}) : super(key: key);
+
+  final String _title;
+
   @override
   _CreateEditScorecardPageState createState() =>
       _CreateEditScorecardPageState();
@@ -25,11 +29,12 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
         actions: [
           IconButton(
             icon: Text("Save", style: new TextStyle(fontSize: 10)),
-            onPressed: () => Nav.push(context, ScorecardPage("Scorecard")),
+            onPressed: () =>
+                Nav.pushAndReplace(context, ScorecardPage("Scorecard")),
           )
         ],
         title: Center(
-          child: Text('Edit Scorecard'),
+          child: Text('${widget._title} Scorecard'),
         ),
       ),
       body: _buildScrollPage(context),
@@ -200,8 +205,7 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage())),
+              onPressed: () => Nav.push(context, HomePage()),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Save", style: TextStyle(fontSize: 18)),

@@ -5,7 +5,7 @@ class PlayerScore extends StatefulWidget {
       : super(key: key);
 
   final Text _playerName;
-  final int _totalScore;
+  final Text _totalScore;
   final Color _color;
 
   @override
@@ -27,7 +27,7 @@ class _PlayerScoreState extends State<PlayerScore> {
                 border: Border.all(color: widget._color, width: 3)),
             child: Center(
               child: Text(
-                '${widget._totalScore}',
+                '${widget._totalScore.data}',
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
