@@ -8,7 +8,6 @@ import 'package:puttputtapp/widgets/hole_card_widget.dart';
 import 'package:puttputtapp/widgets/player_score_widget.dart';
 
 class ScorecardPage extends StatefulWidget {
-
   ScorecardPage(this._title, {Key key}) : super(key: key);
 
   final String _title;
