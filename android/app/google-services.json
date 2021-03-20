@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "737765573635",
+    "project_id": "puttputt-a0f95",
+    "storage_bucket": "puttputt-a0f95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737765573635:android:6fcb2d147a71f5ebf77a36",
+        "android_client_info": {
+          "package_name": "com.vcu.puttputtpalooza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737765573635-l2cpbt0ue66lmgmnv5sk2gpc76k9ap7e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vcu.puttputtpalooza",
+            "certificate_hash": "ee50b84ebe6e7574506cc46eaffac3185b7c94d9"
+          }
+        },
+        {
+          "client_id": "737765573635-5jq0bbq4o7ca6r9fmsvfjc2nqm1tv00v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF8hDm29DfMiNhmv0S4IlYpnnGTBAyT3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737765573635-5jq0bbq4o7ca6r9fmsvfjc2nqm1tv00v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
