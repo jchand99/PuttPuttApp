@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>737765573635-qdl1qb6hvft0le3phtgol9unr1pff8e7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.737765573635-qdl1qb6hvft0le3phtgol9unr1pff8e7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>737765573635-l2cpbt0ue66lmgmnv5sk2gpc76k9ap7e.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAaW6L8DDE1y2uDomnxkyOdFuX-4AqZI4k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>737765573635</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vcu.puttputtpalooza</string>
+	<key>PROJECT_ID</key>
+	<string>puttputt-a0f95</string>
+	<key>STORAGE_BUCKET</key>
+	<string>puttputt-a0f95.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:737765573635:ios:3919fc1f54fc6c76f77a36</string>
+</dict>
+</plist>
