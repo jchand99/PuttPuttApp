@@ -9,9 +9,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _buildColumn(context)
-      ),
+      body: Center(child: _buildColumn(context)),
     );
   }
 
@@ -19,9 +17,9 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: <Widget>[
         Container(
-          height: 275,
-          width: 250,
-          padding: EdgeInsets.only(top: 100),
+          height: 200,
+          width: 200,
+          margin: EdgeInsets.only(top: 100),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(200),
           ),
@@ -30,7 +28,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         Container(
-            padding: const EdgeInsets.fromLTRB(12, 40, 12, 12),
+            margin: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.all(12),
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -44,9 +43,34 @@ class _LoginPageState extends State<LoginPage> {
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: ' Password',
+                prefixIcon: Icon(Icons.lock_outline_rounded),
+                labelText: 'Password',
                 filled: true,
                 fillColor: Colors.white,
+              ),
+            )),
+        Container(
+            height: 50,
+            width: 250,
+            margin: const EdgeInsets.only(top: 40),
+            decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(15)),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                'Sign In!',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            )),
+        Container(
+            height: 50,
+            width: 250,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Sign up!',
+                style: TextStyle(color: Colors.green[700], fontSize: 24),
               ),
             ))
       ],
