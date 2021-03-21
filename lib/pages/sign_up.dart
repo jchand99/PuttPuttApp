@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:puttputtapp/pages/home.dart';
-import 'package:puttputtapp/pages/sign_up.dart';
 import 'package:puttputtapp/util/nav.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +51,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
             )),
         Container(
+          padding: const EdgeInsets.all(12),
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.lock_outline_rounded),
+              labelText: 'Confirm Password',
+              filled: true,
+              fillColor: Colors.white,
+            ),
+        )),
+        Container(
             height: 50,
             width: 250,
             margin: const EdgeInsets.only(top: 40),
@@ -61,25 +70,13 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(15)),
             child: ElevatedButton(
               onPressed: () {
-                Nav.push(context, HomePage());
+                Nav.pop(context);
               },
               child: Text(
-                'Sign In!',
+                'Submit',
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             )),
-        Container(
-            height: 50,
-            width: 250,
-            child: TextButton(
-              onPressed: () {
-                Nav.push(context, SignUpPage());
-              },
-              child: Text(
-                'Sign up!',
-                style: TextStyle(color: Colors.green[700], fontSize: 24),
-              ),
-            ))
       ],
     );
   }
