@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/home.dart';
-import 'package:puttputtapp/pages/scorecard.dart';
-import 'package:puttputtapp/pages/create_edit_scorecard.dart';
+import 'package:puttputtapp/pages/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.green[700],
         scaffoldBackgroundColor: Colors.grey[300],
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }

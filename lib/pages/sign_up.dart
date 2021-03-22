@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:puttputtapp/util/nav.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -12,25 +13,34 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
+  double marginTop = 75;
+
+  @override
+  void initState() {
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        setState(() {
+          marginTop = visible ? 0 : 75;
+        });
+      },
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _buildColumn(context)),
+      body: _buildColumn(context),
     );
   }
 
   Widget _buildColumn(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Container(
-          height: 200,
-          width: 200,
-          margin: EdgeInsets.only(top: 75),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(200),
-          ),
+          margin: EdgeInsets.only(top: marginTop),
           child: Center(
-            child: Icon(Icons.sports_golf_rounded, size: 200),
+            child: Icon(Icons.sports_golf_rounded, size: 180),
           ),
         ),
         _buildRegistrationForm(context),
@@ -60,6 +70,9 @@ class _SignUpPageState extends State<SignUpPage> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: TextFormField(
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  obscureText: true,
                   controller: _pass,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -75,6 +88,9 @@ class _SignUpPageState extends State<SignUpPage> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: TextFormField(
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  obscureText: true,
                   controller: _confirmPass,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),

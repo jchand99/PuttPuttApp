@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:puttputtapp/pages/home.dart';
 import 'package:puttputtapp/pages/sign_up.dart';
 import 'package:puttputtapp/util/nav.dart';
@@ -13,78 +14,37 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
 
+  double marginTop = 100;
+
+  @override
+  void initState() {
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        setState(() {
+          marginTop = visible ? 0 : 100;
+        });
+      },
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _buildColumn(context)),
+      body: _buildColumn(context)
     );
   }
 
   Widget _buildColumn(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Container(
-          height: 200,
-          width: 200,
-          margin: EdgeInsets.only(top: 100),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(200),
-          ),
+          margin: EdgeInsets.only(top: marginTop),
           child: Center(
-            child: Icon(Icons.sports_golf_rounded, size: 200),
+            child: Icon(Icons.sports_golf_rounded, size: 180),
           ),
         ),
         _buildLoginForm(context),
-        // Container(
-        //     margin: const EdgeInsets.only(top: 20),
-        //     padding: const EdgeInsets.all(12),
-        //     child: TextField(
-        //       decoration: InputDecoration(
-        //         border: OutlineInputBorder(),
-        //         labelText: '@ Email',
-        //         filled: true,
-        //         fillColor: Colors.white,
-        //       ),
-        //     )),
-        // Container(
-        //     padding: const EdgeInsets.all(12),
-        //     child: TextField(
-        //       decoration: InputDecoration(
-        //         border: OutlineInputBorder(),
-        //         prefixIcon: Icon(Icons.lock_outline_rounded),
-        //         labelText: 'Password',
-        //         filled: true,
-        //         fillColor: Colors.white,
-        //       ),
-        //     )),
-        // Container(
-        //     height: 50,
-        //     width: 250,
-        //     margin: const EdgeInsets.only(top: 40),
-        //     decoration: BoxDecoration(
-        //         color: Theme.of(context).primaryColor,
-        //         borderRadius: BorderRadius.circular(15)),
-        //     child: ElevatedButton(
-        //       onPressed: () {
-        //         Nav.push(context, HomePage());
-        //       },
-        //       child: Text(
-        //         'Sign In!',
-        //         style: TextStyle(color: Colors.white, fontSize: 24),
-        //       ),
-        //     )),
-        // Container(
-        //     height: 50,
-        //     width: 250,
-        //     child: TextButton(
-        //       onPressed: () {
-        //         Nav.push(context, SignUpPage());
-        //       },
-        //       child: Text(
-        //         'Sign up!',
-        //         style: TextStyle(color: Colors.green[700], fontSize: 24),
-        //       ),
-        //     ))
       ],
     );
   }
@@ -111,6 +71,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: TextFormField(
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  obscureText: true,
                   controller: _pass,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
