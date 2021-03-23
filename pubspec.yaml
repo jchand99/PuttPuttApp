@@ -17,9 +17,14 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
+# analyzer:
+#   enable-experiment:
+#     - non-nullable
+
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+# ">=2.12.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -31,6 +36,7 @@ dependencies:
   firebase: ^9.0.1
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.2
+  firebase_core: ^1.0.2
 
 dev_dependencies:
   flutter_test:
