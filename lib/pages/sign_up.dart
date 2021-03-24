@@ -10,6 +10,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
@@ -28,14 +29,25 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _email.dispose();
+    _pass.dispose();
+    _confirmPass.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildColumn(context),
+      body: SingleChildScrollView(
+        child: _buildColumn(context),
+      ),
     );
   }
 
   Widget _buildColumn(BuildContext context) {
-    return ListView(
+    return Column(
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(top: marginTop),
@@ -50,12 +62,16 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _buildRegistrationForm(BuildContext context) {
     return Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(12),
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(12),
+            child: Material(
+              elevation: 10,
+              color: Colors.transparent,
               child: TextFormField(
+                controller: _email,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email_outlined),
@@ -66,12 +82,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     ? null
                     : "Please enter a valid email",
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
+            )
+          ),
+          Container(
+            margin: EdgeInsets.all(12),
+            child: Material(
+              elevation: 10,
+              color: Colors.transparent,
               child: TextFormField(
-                  enableSuggestions: false,
-                  autocorrect: false,
                   obscureText: true,
                   controller: _pass,
                   decoration: InputDecoration(
@@ -83,32 +101,41 @@ class _SignUpPageState extends State<SignUpPage> {
                   validator: (value) {
                     if (value.isEmpty) return "Please enter a password";
                     return null;
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
+                  }
+              ),
+            )                 
+          ),
+          Container(
+            margin: EdgeInsets.all(12),
+            child: Material(
+              elevation: 10,
+              color: Colors.transparent,
               child: TextFormField(
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  controller: _confirmPass,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
-                      labelText: 'Confirm Password',
-                      filled: true,
-                      fillColor: Colors.white),
-                  validator: (value) {
-                    if (value.isEmpty) return "Please enter a password";
-                    if (value != _pass.text) return "Passwords don't match";
-                    return null;
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
+                obscureText: true,
+                controller: _confirmPass,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.lock_outline_rounded),
+                    labelText: 'Confirm Password',
+                    filled: true,
+                    fillColor: Colors.white),
+                validator: (value) {
+                  if (value.isEmpty) return "Please enter a password";
+                  if (value != _pass.text) return "Passwords don't match";
+                  return null;
+                }
+              ),
+            )
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            child: Material(
+              elevation: 10,
+              color: Colors.transparent,
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
                     Nav.pop(context);
                   }
                 },
@@ -118,7 +145,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             )
-          ],
-        ));
+          ),
+        ],
+      )
+    );
   }
 }
