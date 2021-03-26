@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puttputtapp/pages/login.dart';
+import 'package:puttputtapp/pages/scorecard.dart';
 import 'pages/home.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           if (FirebaseAuth.instance.currentUser == null) {
-            return _buildApp(context, LoginPage());
+            return _buildApp(context, ScorecardPage("Title"));
           } else {
             return _buildApp(context, HomePage());
           }
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green[700],
         accentColor: Colors.green[700],
         scaffoldBackgroundColor: Colors.grey[300],
+        fontFamily: 'Lexend',
       ),
       home: body,
     );
