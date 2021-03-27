@@ -11,16 +11,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List _cards = [];
   bool removeCards = false;
+  bool _noCards = true;
   int _scoreCardAmt = 0;
 
   void _removeCard(int index) {
     setState(() {
       _cards.removeAt(index);
       _scoreCardAmt--;
+      if (_scoreCardAmt == 0) {
+        _noCards = true;
+      }
     });
   }
 
   void _addCard(BuildContext context) {
+    _noCards = false;
     print('Pressed');
     Nav.push(context, CreateEditScorecardPage('Create'));
 
@@ -93,16 +98,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(16),
-      itemCount: _cards.length,
-      itemBuilder: (context, index) {
-        return _buildScoreCard(context, index);
-      },
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.white,
-      ),
-    );
+    if (_noCards) {
+      return Center(
+        child: Container(
+          margin: EdgeInsets.all(12),
+          child: Text(
+            "Press the add button in the bottom right corner to add a Scorecard",
+            style: TextStyle(fontSize: 22, ),
+            textAlign: TextAlign.center,
+          ),
+        )
+      );
+    } else {
+      return ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: _cards.length,
+        itemBuilder: (context, index) {
+          return _buildScoreCard(context, index);
+        },
+        separatorBuilder: (context, index) => Divider(
+          color: Colors.white,
+        ),
+      );
+    }
   }
 
   Widget _buildScoreCard(BuildContext context, index) {
