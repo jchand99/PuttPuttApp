@@ -29,7 +29,8 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Text("Save", style: new TextStyle(fontSize: 10)),
+            iconSize: 30,
+            icon: Text("Save", style: new TextStyle(fontSize: 14)),
             onPressed: () =>
                 Nav.pushAndReplace(context, ScorecardPage("Scorecard")),
           )
@@ -51,7 +52,30 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
 
   Column _buildColumn(BuildContext context) {
     return Column(children: <Widget>[
-      _buildName(context),
+      Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          // decoration: BoxDecoration(
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: Colors.grey[200],
+          //       spreadRadius: 1,
+          //       blurRadius: 1,
+          //       offset: Offset(0, 1), // changes position of shadow
+          //     ),
+          //   ],
+          // ),
+          //color: Colors.white,
+          child: _buildName(context)),
       Expanded(child: _buildPlayers(context)),
       //_buildButtons(context),
     ]);
@@ -70,11 +94,16 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             border: OutlineInputBorder(),
             labelText: 'Course Name',
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Colors.grey[200],
           )),
         ),
         Container(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(
+            left: 12,
+            top: 0,
+            right: 12,
+            bottom: 0,
+          ),
           child: SwitchListTile(
             title: const Text('Par', style: TextStyle(fontSize: 16)),
             value: par,
@@ -90,7 +119,12 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.only(
+                left: 26,
+                top: 0,
+                right: 26,
+                bottom: 0,
+              ),
               child: Align(
                 child: Text(
                   'Players',
@@ -101,7 +135,12 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             ),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.only(
+                left: 26,
+                top: 12,
+                right: 26,
+                bottom: 16,
+              ),
               child: Align(
                   child: ElevatedButton(
                       onPressed: () {
@@ -125,27 +164,37 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             border: OutlineInputBorder(),
             labelText: 'Course Name',
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Colors.grey[200],
           )),
         ),
         Container(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(
+            left: 12,
+            top: 0,
+            right: 12,
+            bottom: 0,
+          ),
           child: SwitchListTile(
-            title: const Text('Par'),
+            title: const Text('Par', style: TextStyle(fontSize: 16)),
             value: par,
             onChanged: (bool value) {
               setState(() {
                 par = value;
               });
             },
-            secondary: const Icon(Icons.flag_rounded),
+            secondary: const Icon(Icons.flag_outlined),
           ),
         ),
         Row(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.only(
+                left: 26,
+                top: 0,
+                right: 26,
+                bottom: 0,
+              ),
               child: Align(
                 child: Text(
                   'Players',
@@ -156,7 +205,12 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             ),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.only(
+                left: 26,
+                top: 12,
+                right: 26,
+                bottom: 16,
+              ),
               child: Align(
                   child: ElevatedButton(
                       onPressed: () {
@@ -243,7 +297,7 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
           child: ListTile(
               title: //Text(_names[index]['player']),
                   Padding(
-                padding: const EdgeInsets.all(2.0),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Container(
                   //height: 4,
                   child: TextField(
@@ -262,7 +316,7 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
           child: ListTile(
             title: //Text(_names[index]['player']),
                 Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Container(
                 //height: 4,
                 child: TextField(
@@ -293,7 +347,7 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
       ),
       IconButton(
-        icon: Icon(Icons.edit, color: Colors.black),
+        icon: Icon(Icons.edit, color: Colors.black, size: 22),
         onPressed: () =>
             Nav.push(context, ColorSelectPage(_names[index]['player'])),
       ),
