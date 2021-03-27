@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puttputtapp/pages/color_select.dart';
 import 'package:puttputtapp/pages/home.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
 import 'package:puttputtapp/pages/create_edit_scorecard.dart';
@@ -284,10 +285,18 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
   }
 
   Widget _ballColor(BuildContext context, index) {
-    return IconButton(
-        icon: Icon(
-      Icons.circle,
-      color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    ));
+    return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
+      Icon(
+        Icons.circle,
+        size: 32,
+        color:
+            Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+      ),
+      IconButton(
+        icon: Icon(Icons.edit, color: Colors.black),
+        onPressed: () =>
+            Nav.push(context, ColorSelectPage(_names[index]['player'])),
+      ),
+    ]);
   }
 }
