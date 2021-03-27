@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
           child: ListTile(
             title: Text(_cards[index]['cardName']),
             leading: IconButton(
-                icon: Icon(Icons.highlight_remove_outlined),
+                icon: Icon(Icons.highlight_remove_outlined, color: Colors.red),
                 onPressed: () {
                   _removeCard(index);
                 }),
