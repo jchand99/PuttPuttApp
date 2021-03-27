@@ -285,14 +285,18 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
   }
 
   Widget _ballColor(BuildContext context, index) {
-    return IconButton(
-      icon: Icon(
+    return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
+      Icon(
         Icons.circle,
+        size: 32,
         color:
             Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
       ),
-      onPressed: () =>
-          Nav.push(context, ColorSelectPage(_names[index]['player'])),
-    );
+      IconButton(
+        icon: Icon(Icons.edit, color: Colors.black),
+        onPressed: () =>
+            Nav.push(context, ColorSelectPage(_names[index]['player'])),
+      ),
+    ]);
   }
 }
