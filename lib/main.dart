@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           if (FirebaseAuth.instance.currentUser == null) {
-            return _buildApp(context, ScorecardPage("Title"));
+            return _buildApp(context, LoginPage());
           } else {
             return _buildApp(context, HomePage());
           }
