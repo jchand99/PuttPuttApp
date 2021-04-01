@@ -30,10 +30,11 @@ class MyApp extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          if (FirebaseAuth.instance.currentUser == null) {
+          var currentUser = FirebaseAuth.instance.currentUser;
+          if (currentUser == null) {
             return _buildApp(context, LoginPage());
           } else {
-            return _buildApp(context, HomePage());
+            return _buildApp(context, HomePage(currentUser));
           }
         }
 
