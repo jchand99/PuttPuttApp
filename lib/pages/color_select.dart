@@ -1,25 +1,40 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:puttputtapp/util/color_picker.dart';
+import 'package:puttputtapp/util/nav.dart';
 
 class ColorSelectPage extends StatefulWidget {
-  ColorSelectPage(this._name, {Key key}) : super(key: key);
+  ColorSelectPage(this._playerName, this._scorecard_id,
+      {Key key, this.onChanged})
+      : super(key: key);
 
-  final String _name;
+  final String _playerName;
+  final String _scorecard_id;
+  final ValueChanged<String> onChanged;
 
   @override
   _ColorSelectPageState createState() => _ColorSelectPageState();
 }
 
-Color _playerColor = Colors.red;
-
 class _ColorSelectPageState extends State<ColorSelectPage> {
+  Color _playerColor = Colors.red;
   String _name;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          TextButton(
+              child: Text('Save', style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                widget.onChanged(ColorPicker.getStringFromColor(_playerColor));
+                Nav.pop(context);
+              })
+        ],
         title: Center(
           child: Text('$_name'),
         ),
@@ -35,8 +50,8 @@ class _ColorSelectPageState extends State<ColorSelectPage> {
 
   @override
   void initState() {
-    _name = widget._name;
     super.initState();
+    _name = widget._playerName;
   }
 
   Widget _ballColors(BuildContext context) {
@@ -73,7 +88,7 @@ class _ColorSelectPageState extends State<ColorSelectPage> {
               children: [
                 _ballColor(context, Colors.black),
                 _ballColor(context, Colors.white),
-                _ballColor(context, Colors.pink[250]),
+                _ballColor(context, Colors.pink),
                 _ballColor(context, Colors.brown),
               ],
             ),
