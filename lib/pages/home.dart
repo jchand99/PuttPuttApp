@@ -5,6 +5,8 @@ import 'package:puttputtapp/pages/create_edit_scorecard.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
 import 'package:puttputtapp/util/nav.dart';
 
+import 'login.dart';
+
 class HomePage extends StatefulWidget {
   HomePage(this._firebaseUser, {Key key}) : super(key: key);
 
@@ -73,7 +75,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+            Nav.pushAndReplace(context, LoginPage());
+          },
         ),
         title: Center(
           child: Text('Scorecards'),

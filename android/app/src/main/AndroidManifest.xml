@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.puttputtapp">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="puttputtapp"
+        android:label="PuttPuttPalooza"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
