@@ -37,6 +37,7 @@ dependencies:
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.2
   firebase_core: ^1.0.2
+  crypto: ^3.0.0
 
   email_validator: '^1.0.6'
 
