@@ -58,17 +58,8 @@ class _HolePageState extends State<HolePage> {
           Container(
             padding: const EdgeInsets.all(64.0),
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(.92),
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.transparent, width: 3),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: Offset(0, 10),
-                  )
-                ]),
+                border: Border.all(color: Colors.black, width: 3)),
             child: Column(
               children: [
                 Text('${widget._holeNumber}', style: TextStyle(fontSize: 50)),
@@ -83,15 +74,6 @@ class _HolePageState extends State<HolePage> {
               children: [
                 Text('Par: ', style: TextStyle(fontSize: 20)),
                 Container(
-                  decoration:
-                      BoxDecoration(color: Colors.grey[300], boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
-                    )
-                  ]),
                   width: 40,
                   height: 40,
                   child: TextField(
