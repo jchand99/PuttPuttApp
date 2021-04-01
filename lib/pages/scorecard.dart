@@ -91,7 +91,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(Icons.golf_course), Icon(Icons.add)],
+            children: [Icon(Icons.add)],
           ),
         ),
       ),
@@ -102,6 +102,12 @@ class _ScorecardPageState extends State<ScorecardPage> {
     return Column(
       children: [
         Expanded(child: _listView(context)),
+        Container(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: Center(
+            child: Text("Tap the '+' to create a hole!"),
+          ),
+        ),
         _totals(context),
       ],
     );
@@ -135,7 +141,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
         },
         itemCount: _players.length,
         separatorBuilder: (context, index) => const VerticalDivider(
-          color: Colors.green,
+          color: Color.fromRGBO(0, 0, 0, 0),
           width: 35,
         ),
       ),

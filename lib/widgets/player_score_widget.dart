@@ -17,14 +17,14 @@ class _PlayerScoreState extends State<PlayerScore> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: 70,
             height: 70,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: widget._color, width: 3)),
+                border: Border.all(color: widget._color, width: 4)),
             child: Center(
               child: Text(
                 '${widget._totalScore.data}',
