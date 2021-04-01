@@ -119,7 +119,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(Icons.add)],
+            children: [Icon(Icons.golf_course), Icon(Icons.add)],
           ),
         ),
       ),

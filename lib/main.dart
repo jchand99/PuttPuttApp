@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:puttputtapp/pages/login.dart';
-import 'package:puttputtapp/pages/scorecard.dart';
 import 'pages/home.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,7 +57,6 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green[700],
         accentColor: Colors.green[700],
         scaffoldBackgroundColor: Colors.grey[300],
-        fontFamily: 'Lexend',
       ),
       home: body,
     );

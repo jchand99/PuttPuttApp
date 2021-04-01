@@ -1,23 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:puttputtapp/util/nav.dart';
 import 'package:puttputtapp/widgets/hole_score_widget.dart';
 
 class HolePage extends StatefulWidget {
-  HolePage(this._holeNumber, {Key key}) : super(key: key);
+  HolePage(this._holeNumber, this._scorecard_id, this._holeDoc, {Key key})
+      : super(key: key);
 
   final int _holeNumber;
+  final String _scorecard_id;
+  final DocumentSnapshot _holeDoc;
   @override
   _HolePageState createState() => _HolePageState();
 }
 
 class _HolePageState extends State<HolePage> {
-  List<Text> players = [
-    Text('Jacob'),
-    Text('Alex'),
-    Text('Roselyn'),
-    Text('Jackson'),
-  ];
-
   List<Color> colors = [
     Colors.black,
     Colors.black,
@@ -34,7 +32,10 @@ class _HolePageState extends State<HolePage> {
         actions: [
           TextButton(
             child: Text('Save', style: TextStyle(color: Colors.white)),
-            onPressed: () => Nav.pop(context),
+            onPressed: () {
+              // TODO: Add up all the scores to the totals of each player here
+              Nav.pop(context);
+            },
           )
         ],
         title: Container(
@@ -77,7 +78,18 @@ class _HolePageState extends State<HolePage> {
                   width: 40,
                   height: 40,
                   child: TextField(
-                    onTap: () => print('Hello'),
+                    onChanged: (value) {
+                      if (value == '') return;
+                      // Update the par value for this hole in the database
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser.uid)
+                          .collection('scorecards')
+                          .doc(widget._scorecard_id)
+                          .collection('holes')
+                          .doc('hole_${widget._holeNumber - 1}')
+                          .update({'par': int.parse(value)});
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                     ),
@@ -94,53 +106,12 @@ class _HolePageState extends State<HolePage> {
     );
   }
 
-  Widget _body(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Center(
-          child: Container(
-            margin: const EdgeInsets.all(60.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 5),
-              shape: BoxShape.circle,
-              color: Colors.amber,
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${widget._holeNumber}',
-                    style: TextStyle(fontSize: 50.0),
-                  ),
-                  Icon(Icons.flag_outlined, size: 50.0)
-                ],
-              ),
-            ),
-          ),
-        ),
-        Container(
-          color: Colors.red,
-          // height: 10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Par: '),
-              TextField(),
-            ],
-          ),
-        ),
-        // Expanded(child: _listView(context))
-      ],
-    );
-  }
-
   Widget _listView(BuildContext context) {
     return ListView.builder(
-      itemCount: players.length,
+      itemCount: widget._holeDoc['players'].length,
       itemBuilder: (context, index) {
-        return HoleScore(players[index]);
+        return HoleScore(index, Text(widget._holeDoc['players'][index]['name']),
+            widget._holeNumber, widget._scorecard_id);
       },
     );
   }

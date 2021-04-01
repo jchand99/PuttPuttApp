@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HoleScore extends StatefulWidget {
-  HoleScore(this._player, {Key key}) : super(key: key);
+  HoleScore(this._index, this._player, this._holeNumber, this._scorecard_id,
+      {Key key})
+      : super(key: key);
 
   final Text _player;
+  final int _holeNumber;
+  final String _scorecard_id;
+  final int _index;
   @override
   _HoleScoreState createState() => _HoleScoreState();
 }
@@ -39,6 +46,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[0] = Colors.red;
+                      updateScore(widget._index, 1);
                     });
                   },
                   splashColor: Colors.amber,
@@ -59,6 +67,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[1] = Colors.red;
+                      updateScore(widget._index, 2);
                     });
                   },
                   splashColor: Colors.amber,
@@ -79,6 +88,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[2] = Colors.red;
+                      updateScore(widget._index, 3);
                     });
                   },
                   splashColor: Colors.amber,
@@ -99,6 +109,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[3] = Colors.red;
+                      updateScore(widget._index, 4);
                     });
                   },
                   splashColor: Colors.amber,
@@ -119,6 +130,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[4] = Colors.red;
+                      updateScore(widget._index, 5);
                     });
                   },
                   splashColor: Colors.amber,
@@ -139,6 +151,7 @@ class _HoleScoreState extends State<HoleScore> {
                     setState(() {
                       colors.fillRange(0, 7, Colors.black);
                       colors[5] = Colors.red;
+                      updateScore(widget._index, 6);
                     });
                   },
                   splashColor: Colors.amber,
@@ -177,6 +190,10 @@ class _HoleScoreState extends State<HoleScore> {
                             colors[6] = Colors.red;
                           });
                         },
+                        onChanged: (value) {
+                          if (value == '') return;
+                          updateScore(widget._index, int.parse(value));
+                        },
                         decoration: InputDecoration(border: InputBorder.none),
                         style: TextStyle(color: Colors.red),
                         keyboardType: TextInputType.number,
@@ -190,5 +207,32 @@ class _HoleScoreState extends State<HoleScore> {
         ),
       ),
     );
+  }
+
+  void updateScore(int index, int value) async {
+    // Grab the document with the players for that hole
+    var doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('scorecards')
+        .doc(widget._scorecard_id)
+        .collection('holes')
+        .doc('hole_${widget._holeNumber - 1}')
+        .get();
+
+    // Grab list of players
+    var players = doc['players'];
+    // Set the players stroke count
+    players[index]['strokes'] = value;
+
+    // Update the database to reflect the new stroke count
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('scorecards')
+        .doc(widget._scorecard_id)
+        .collection('holes')
+        .doc('hole_${widget._holeNumber - 1}')
+        .update({'players': players});
   }
 }
