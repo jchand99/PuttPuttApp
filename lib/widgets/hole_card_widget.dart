@@ -1,15 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:puttputtapp/util/nav.dart';
 import 'package:puttputtapp/pages/hole.dart';
 
 class HoleCard extends StatefulWidget {
-  HoleCard(this._holeNumber, this._players, this._scores, {this.par, Key key})
+  HoleCard(this._holeNumber, this._scorecard_id, this._holeDoc,
+      {this.par, Key key})
       : super(key: key);
 
   final int _holeNumber;
   final int par;
-  final List<Text> _players;
-  final List<Text> _scores;
+  final String _scorecard_id;
+  final QueryDocumentSnapshot _holeDoc;
 
   @override
   _HoleCardState createState() => _HoleCardState();
@@ -20,7 +22,10 @@ class _HoleCardState extends State<HoleCard> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () => Nav.push(context, HolePage(widget._holeNumber)),
+        onTap: () => Nav.push(
+            context,
+            HolePage(
+                widget._holeNumber, widget._scorecard_id, widget._holeDoc)),
         splashColor: Theme.of(context).accentColor,
         child: Container(
           padding: const EdgeInsets.all(8.0),
@@ -73,22 +78,33 @@ class _HoleCardState extends State<HoleCard> {
   }
 
   Widget _listOfPlayerNames(BuildContext context) {
+    var players = widget._holeDoc['players'];
+    List<Text> names = [];
+    for (int i = 0; i < players.length; i++) {
+      names.add(Text(players[i]['name'].toString()));
+    }
     return Container(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: widget._players,
+        children: names,
       ),
     );
   }
 
   Widget _listOfPlayerScores(BuildContext context) {
+    var players = widget._holeDoc['players'];
+    List<Text> strokes = [];
+    for (int i = 0; i < players.length; i++) {
+      strokes.add(Text(players[i]['strokes'].toString()));
+    }
     return Container(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: widget._scores,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: strokes,
       ),
     );
   }
