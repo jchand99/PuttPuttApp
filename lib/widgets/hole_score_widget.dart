@@ -22,8 +22,11 @@ class _HoleScoreState extends State<HoleScore> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsetsDirectional.only(bottom: 3.0),
       // height: 80,
       child: Card(
+        shadowColor: Colors.grey.withOpacity(0.5),
+        elevation: 4,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Column(
