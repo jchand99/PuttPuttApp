@@ -209,7 +209,7 @@ class _SignUpPageState extends State<SignUpPage> {
             .collection('users')
             .doc(credential.user.uid)
             .set({
-          'scorecardCount': 0,
+          'scorecard_count': 0,
           // Any other data we want the user to have!
         });
 
