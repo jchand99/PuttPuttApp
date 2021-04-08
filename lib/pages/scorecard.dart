@@ -110,7 +110,7 @@ class _ScorecardPageState extends State<ScorecardPage> {
                 .collection('scorecards')
                 .doc(widget._scorecard_id)
                 .update({
-              'hole_count': holeCount++,
+              'hole_count': ++holeCount,
             });
 
             // Push them to the new hole page
