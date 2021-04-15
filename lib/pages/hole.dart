@@ -32,8 +32,44 @@ class _HolePageState extends State<HolePage> {
         actions: [
           TextButton(
             child: Text('Save', style: TextStyle(color: Colors.white)),
-            onPressed: () {
-              // TODO: Add up all the scores to the totals of each player here
+            onPressed: () async {
+              // Updates the total score for all the players in the game.
+              var holes = await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser.uid)
+                  .collection('scorecards')
+                  .doc(widget._scorecard_id)
+                  .collection('holes')
+                  .get();
+              var scorecard = await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser.uid)
+                  .collection('scorecards')
+                  .doc(widget._scorecard_id)
+                  .get();
+
+              var scorecardPlayers = scorecard['players'];
+
+              for (int playerIndex = 0;
+                  playerIndex < scorecardPlayers.length;
+                  playerIndex++) {
+                int totalScore = 0;
+                for (int holeIndex = 0;
+                    holeIndex < holes.docs.length;
+                    holeIndex++) {
+                  totalScore +=
+                      holes.docs[holeIndex]['players'][playerIndex]['strokes'];
+                }
+
+                scorecardPlayers[playerIndex]['total_score'] = totalScore;
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser.uid)
+                    .collection('scorecards')
+                    .doc(widget._scorecard_id)
+                    .update({'players': scorecardPlayers});
+              }
+
               Nav.pop(context);
             },
           )
@@ -52,7 +88,7 @@ class _HolePageState extends State<HolePage> {
     );
   }
 
-  Widget _newBody(BuildContext) {
+  Widget _newBody(BuildContext context) {
     return Center(
       child: Column(
         children: [
@@ -71,13 +107,14 @@ class _HolePageState extends State<HolePage> {
           Container(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text('Par: ', style: TextStyle(fontSize: 20)),
                 Container(
                   width: 40,
                   height: 40,
                   child: TextField(
+                    maxLength: 1,
                     onChanged: (value) {
                       if (value == '') return;
                       // Update the par value for this hole in the database
@@ -92,6 +129,8 @@ class _HolePageState extends State<HolePage> {
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
+                      counterText: '',
+                      contentPadding: const EdgeInsets.only(left: 16),
                     ),
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.black),
