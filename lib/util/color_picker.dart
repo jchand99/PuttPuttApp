@@ -40,6 +40,7 @@ class ColorPicker {
         return Colors.brown;
         break;
       default:
+        return Colors.grey;
     }
   }
 
@@ -57,6 +58,6 @@ class ColorPicker {
     if (c == Colors.black) return 'black';
     if (c == Colors.brown) return 'brown';
 
-    return '';
+    return 'grey';
   }
 }
