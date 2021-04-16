@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:puttputtapp/pages/create_edit_scorecard.dart';
 import 'package:puttputtapp/pages/scorecard.dart';
 import 'package:puttputtapp/util/nav.dart';
+import 'package:share/share.dart';
 
 import 'login.dart';
 
@@ -72,14 +73,36 @@ class _HomePageState extends State<HomePage> {
             )
     ];
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            FirebaseAuth.instance.signOut();
-            Nav.pushAndReplace(context, LoginPage());
-          },
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Text('Menu'),
+            ),
+            ListTile(
+              leading: Icon(Icons.share_outlined),
+              title: Text('Share'),
+              onTap: () async {
+                final RenderBox box = context.findRenderObject() as RenderBox;
+                final String url =
+                    'https://play.google.com/store/apps/details?id=com.vcu.puttputtpalooza';
+                await Share.share(url,
+                    sharePositionOrigin:
+                        box.localToGlobal(Offset.zero) & box.size);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.login_outlined),
+              title: Text('Logout'),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Nav.pushAndReplace(context, LoginPage());
+              },
+            )
+          ],
         ),
+      ),
+      appBar: AppBar(
         title: Center(
           child: Text('Scorecards'),
         ),
