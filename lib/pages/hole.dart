@@ -96,7 +96,15 @@ class _HolePageState extends State<HolePage> {
             padding: const EdgeInsets.all(64.0),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.black, width: 3)),
+                border: Border.all(color: Colors.black, width: 3),
+                color: Colors.white.withOpacity(.9),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 4,
+                      blurRadius: 5,
+                      offset: Offset(0, 5))
+                ]),
             child: Column(
               children: [
                 Text('${widget._holeNumber}', style: TextStyle(fontSize: 50)),
@@ -113,27 +121,32 @@ class _HolePageState extends State<HolePage> {
                 Container(
                   width: 40,
                   height: 40,
-                  child: TextField(
-                    maxLength: 1,
-                    onChanged: (value) {
-                      if (value == '') return;
-                      // Update the par value for this hole in the database
-                      FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(FirebaseAuth.instance.currentUser.uid)
-                          .collection('scorecards')
-                          .doc(widget._scorecard_id)
-                          .collection('holes')
-                          .doc('hole_${widget._holeNumber - 1}')
-                          .update({'par': int.parse(value)});
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      counterText: '',
-                      contentPadding: const EdgeInsets.only(left: 16),
+                  child: Material(
+                    elevation: 4,
+                    shadowColor: Colors.grey,
+                    color: Colors.grey[300],
+                    child: TextField(
+                      maxLength: 1,
+                      onChanged: (value) {
+                        if (value == '') return;
+                        // Update the par value for this hole in the database
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser.uid)
+                            .collection('scorecards')
+                            .doc(widget._scorecard_id)
+                            .collection('holes')
+                            .doc('hole_${widget._holeNumber - 1}')
+                            .update({'par': int.parse(value)});
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        counterText: '',
+                        contentPadding: const EdgeInsets.only(left: 16),
+                      ),
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(color: Colors.black),
                     ),
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],

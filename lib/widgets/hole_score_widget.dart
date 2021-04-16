@@ -31,6 +31,8 @@ class _HoleScoreState extends State<HoleScore> {
     return Container(
       // height: 80,
       child: Card(
+        elevation: 4,
+        shadowColor: Colors.grey,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Column(
