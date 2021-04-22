@@ -21,7 +21,29 @@ class _HomePageState extends State<HomePage> {
   String _id;
 
   void _removeCard(BuildContext context, String name) {
-    _createDialog(context, name);
+    showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Delete Scorecard"),
+              content: Text("Do you want to delete \"${name}\""),
+              actions: <Widget>[
+                TextButton(
+                  child: Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text("Yes"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    FirebaseFirestore.instance.collection('users').doc(widget._firebaseUser.uid).collection('scorecards').doc(_id).delete();
+                  },
+                )
+              ]);
+        });
     // TODO: Uncommenting this line will enable actual scorecard deletion!
     // BE CAREFUL WITH THIS LINE
     // FirebaseFirestore.instance.collection('users').doc(widget._firebaseUser.uid).collection('scorecards').doc(_id).delete();
@@ -58,31 +80,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isEditMode = false;
     });
-  }
-
-  Future<void> _createDialog(BuildContext context, String name) {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text("Delete Scorecard"),
-              content: Text("Do you want to delete \"${name}\""),
-              actions: <Widget>[
-                TextButton(
-                  child: Text("No"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text("Yes"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ]);
-        });
   }
 
   @override
