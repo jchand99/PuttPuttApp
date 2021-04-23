@@ -20,14 +20,14 @@ class _HomePageState extends State<HomePage> {
   bool isEditMode = false;
   String _id;
 
-  void _removeCard(BuildContext context, String name) {
+  void _removeCard(BuildContext context, String name, String scorecardId) {
     showDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
               title: Text("Delete Scorecard"),
-              content: Text("Do you want to delete \"${name}\""),
+              content: Text("Do you want to delete \"$name\""),
               actions: <Widget>[
                 TextButton(
                   child: Text("No"),
@@ -39,14 +39,16 @@ class _HomePageState extends State<HomePage> {
                   child: Text("Yes"),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    FirebaseFirestore.instance.collection('users').doc(widget._firebaseUser.uid).collection('scorecards').doc(_id).delete();
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(widget._firebaseUser.uid)
+                        .collection('scorecards')
+                        .doc(scorecardId)
+                        .delete();
                   },
                 )
               ]);
         });
-    // TODO: Uncommenting this line will enable actual scorecard deletion!
-    // BE CAREFUL WITH THIS LINE
-    // FirebaseFirestore.instance.collection('users').doc(widget._firebaseUser.uid).collection('scorecards').doc(_id).delete();
   }
 
   void _createScoreCard(BuildContext context) async {
@@ -184,7 +186,8 @@ class _HomePageState extends State<HomePage> {
                     ? IconButton(
                         icon: Icon(Icons.highlight_remove_outlined,
                             color: Colors.red),
-                        onPressed: () => _removeCard(context, data['name']),
+                        onPressed: () => _removeCard(
+                            context, data['name'], data.id),
                       )
                     : null,
                 onTap: () => Nav.push(
