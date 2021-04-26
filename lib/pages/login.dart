@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -128,6 +129,47 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       'Sign Up!',
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                )),
+            Container(
+                margin: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                child: Material(
+                  elevation: 10,
+                  color: Colors.transparent,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      var credential =
+                          await FirebaseAuth.instance.signInAnonymously();
+
+                      // Reload the current credentials to be safe
+                      var currentUser = credential.user..reload();
+
+                      // Else send them to the HomePage widget
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            currentUser,
+                          ),
+                        ),
+                      );
+
+                      // Create the user in the users collection
+                      // in the database
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(credential.user.uid)
+                          .set({
+                        'scorecard_count': 0,
+                        // Any other data we want the user to have!
+                      });
+
+                      // reload the credentials to be safe
+                      credential.user..reload();
+                    },
+                    child: Text(
+                      'Login Anonymously!',
                       style: TextStyle(color: Colors.white, fontSize: 24),
                     ),
                   ),

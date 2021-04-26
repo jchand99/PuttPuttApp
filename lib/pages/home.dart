@@ -163,8 +163,11 @@ class _HomePageState extends State<HomePage> {
         // then display the help text
         if (snapshot.data.docs.length == 0)
           return Center(
-            child: Text(
-                'Hello ${widget._firebaseUser.email}.\n\n Press the add button in the bottom right corner to add a Scorecard'),
+            child: widget._firebaseUser.email == null
+                ? Text(
+                    'Hello Anonymous user!\n\n Press the add button in the bottom right corner to add a Scorecard')
+                : Text(
+                    'Hello ${widget._firebaseUser.email}!\n\n Press the add button in the bottom right corner to add a Scorecard'),
           );
 
         // Else return the listview of all the scorecards
@@ -186,8 +189,8 @@ class _HomePageState extends State<HomePage> {
                     ? IconButton(
                         icon: Icon(Icons.highlight_remove_outlined,
                             color: Colors.red),
-                        onPressed: () => _removeCard(
-                            context, data['name'], data.id),
+                        onPressed: () =>
+                            _removeCard(context, data['name'], data.id),
                       )
                     : null,
                 onTap: () => Nav.push(
