@@ -8,6 +8,7 @@ import 'package:puttputtapp/pages/create_edit_scorecard.dart';
 import 'package:puttputtapp/util/color_picker.dart';
 import 'dart:math';
 import 'package:puttputtapp/util/nav.dart';
+import 'package:intl/intl.dart';
 
 class CreateEditScorecardPage extends StatefulWidget {
   CreateEditScorecardPage(this._title, this._firebaseUser, this._id,
@@ -27,7 +28,8 @@ class CreateEditScorecardPage extends StatefulWidget {
 class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
   bool par = false;
 
-  String _scorecardName = '';
+  String _scorecardName =
+      'Golf Game ' + DateFormat('MM/dd/yy').format(DateTime.now());
 
   List _players = [];
 
@@ -38,6 +40,9 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_players.length < 1) {
+      _createPlayer(context);
+    }
     return !widget.editMode
         ? _buildNonEditMode(context)
         : _buildEditMode(context);
@@ -57,6 +62,10 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
         ),
       ),
       body: _buildScrollPage(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => onSave(),
+        child: const Icon(Icons.check),
+      ),
     );
   }
 
@@ -229,25 +238,25 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             right: 12,
             bottom: 0,
           ),
-          child: SwitchListTile(
-            title: const Text('Par', style: TextStyle(fontSize: 16)),
-            value: data['par_enabled'],
-            onChanged: (bool value) {
-              setState(() {
-                // TODO: Possible delete?
-                par = value;
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser.uid)
-                    .collection('scorecards')
-                    .doc(widget._id)
-                    .update({'par_enabled': value});
-              });
-            },
-            secondary: !data['par_enabled']
-                ? const Icon(Icons.flag_outlined)
-                : const Icon(Icons.flag_rounded),
-          ),
+          // child: SwitchListTile(
+          //   title: const Text('Par', style: TextStyle(fontSize: 16)),
+          //   value: data['par_enabled'],
+          //   onChanged: (bool value) {
+          //     setState(() {
+          //       // TODO: Possible delete?
+          //       par = value;
+          //       FirebaseFirestore.instance
+          //           .collection('users')
+          //           .doc(FirebaseAuth.instance.currentUser.uid)
+          //           .collection('scorecards')
+          //           .doc(widget._id)
+          //           .update({'par_enabled': value});
+          //     });
+          //   },
+          //   secondary: !data['par_enabled']
+          //       ? const Icon(Icons.flag_outlined)
+          //       : const Icon(Icons.flag_rounded),
+          // ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -316,11 +325,15 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
   }
 
   Widget _buildUpperButtonLayout(BuildContext context) {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('MM/dd/yy');
+    String formattedDate = formatter.format(now);
     return Column(
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(12.0),
-          child: TextField(
+          child: TextFormField(
+              initialValue: 'Golf Game ' + formattedDate,
               onChanged: (value) {
                 setState(() {
                   _scorecardName = value;
@@ -340,18 +353,18 @@ class _CreateEditScorecardPageState extends State<CreateEditScorecardPage> {
             right: 12,
             bottom: 0,
           ),
-          child: SwitchListTile(
-            title: const Text('Par', style: TextStyle(fontSize: 16)),
-            value: par,
-            onChanged: (bool value) {
-              setState(() {
-                par = value;
-              });
-            },
-            secondary: !par
-                ? const Icon(Icons.flag_outlined)
-                : const Icon(Icons.flag_rounded),
-          ),
+          // child: SwitchListTile(
+          //   title: const Text('Par', style: TextStyle(fontSize: 16)),
+          //   value: par,
+          //   onChanged: (bool value) {
+          //     setState(() {
+          //       par = value;
+          //     });
+          //   },
+          //   secondary: !par
+          //       ? const Icon(Icons.flag_outlined)
+          //       : const Icon(Icons.flag_rounded),
+          // ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
