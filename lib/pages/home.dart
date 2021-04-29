@@ -162,10 +162,13 @@ class _HomePageState extends State<HomePage> {
         // If the number of scorecards that exist in the database is 0
         // then display the help text
         if (snapshot.data.docs.length == 0)
-          return Center(
+          return Padding(
+            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: Center(
             child: Text(
-                'Hello ${widget._firebaseUser.email}.\n\n Press the add button in the bottom right corner to add a Scorecard'),
-          );
+                'Hello ${widget._firebaseUser.email}.\n\n Press the add button in the bottom right corner to add a Scorecard',
+                textAlign: TextAlign.center), 
+          ));
 
         // Else return the listview of all the scorecards
         return ListView.separated(
