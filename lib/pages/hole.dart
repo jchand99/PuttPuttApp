@@ -24,6 +24,7 @@ class _HolePageState extends State<HolePage> {
     Colors.black,
     Colors.black,
   ];
+  String scoreCardTitle = "";
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,7 @@ class _HolePageState extends State<HolePage> {
             children: [
               Icon(Icons.golf_course_outlined),
               SizedBox(width: 8.0),
-              Text('Golf Course Name')
+              Text("Gold Course Name")
             ],
           ),
         ),
@@ -96,7 +97,7 @@ class _HolePageState extends State<HolePage> {
             padding: const EdgeInsets.all(64.0),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.black, width: 3),
+                border: Border.all(color: Colors.transparent, width: 3),
                 color: Colors.white.withOpacity(.9),
                 boxShadow: [
                   BoxShadow(
@@ -166,5 +167,15 @@ class _HolePageState extends State<HolePage> {
             widget._holeNumber, widget._scorecard_id);
       },
     );
+  }
+
+  Future<String> _getScorecardName() async {
+    var scorecard = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('scorecards')
+        .doc(widget._scorecard_id)
+        .get();
+    return scorecard['name'];
   }
 }

@@ -45,6 +45,13 @@ class _ColorSelectPageState extends State<ColorSelectPage> {
           _ballColors(context),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          widget.onChanged(ColorPicker.getStringFromColor(_playerColor));
+          Nav.pop(context);
+        },
+        child: const Icon(Icons.check),
+      ),
     );
   }
 

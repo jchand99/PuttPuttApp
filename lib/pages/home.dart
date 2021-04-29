@@ -165,9 +165,11 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
             child: Center(
-            child: Text(
-                'Hello ${widget._firebaseUser.email}.\n\n Press the add button in the bottom right corner to add a Scorecard',
-                textAlign: TextAlign.center), 
+            child: widget._firebaseUser.email == null
+                ? Text(
+                    'Hello Anonymous user!\n\n Press the add button in the bottom right corner to add a Scorecard', textAlign: TextAlign.center)
+                : Text(
+                    'Hello ${widget._firebaseUser.email}!\n\n Press the add button in the bottom right corner to add a Scorecard', textAlign: TextAlign.center),
           ));
 
         // Else return the listview of all the scorecards
@@ -189,8 +191,8 @@ class _HomePageState extends State<HomePage> {
                     ? IconButton(
                         icon: Icon(Icons.highlight_remove_outlined,
                             color: Colors.red),
-                        onPressed: () => _removeCard(
-                            context, data['name'], data.id),
+                        onPressed: () =>
+                            _removeCard(context, data['name'], data.id),
                       )
                     : null,
                 onTap: () => Nav.push(
