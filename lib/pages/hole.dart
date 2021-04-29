@@ -25,68 +25,91 @@ class _HolePageState extends State<HolePage> {
     Colors.black,
   ];
   String scoreCardTitle = "";
+  @override
+  void initState() {
+    _getScorecardName().then((name) => {scoreCardTitle = name});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            child: Text('Save', style: TextStyle(color: Colors.white)),
-            onPressed: () async {
-              // Updates the total score for all the players in the game.
-              var holes = await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(FirebaseAuth.instance.currentUser.uid)
-                  .collection('scorecards')
-                  .doc(widget._scorecard_id)
-                  .collection('holes')
-                  .get();
-              var scorecard = await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(FirebaseAuth.instance.currentUser.uid)
-                  .collection('scorecards')
-                  .doc(widget._scorecard_id)
-                  .get();
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .collection('scorecards')
+            .snapshots(),
+        builder: (context, snapshot) {
+          // If the connection is still ongoing then return a progress indicator
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(child: CircularProgressIndicator());
 
-              var scorecardPlayers = scorecard['players'];
+          // if the snapshot data is null then something is wrong with the connection
+          if (snapshot.data == null)
+            return Center(
+                child:
+                    Text('Something is wrong with the internet connection!'));
 
-              for (int playerIndex = 0;
-                  playerIndex < scorecardPlayers.length;
-                  playerIndex++) {
-                int totalScore = 0;
-                for (int holeIndex = 0;
-                    holeIndex < holes.docs.length;
-                    holeIndex++) {
-                  totalScore +=
-                      holes.docs[holeIndex]['players'][playerIndex]['strokes'];
-                }
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                TextButton(
+                  child: Text('Save', style: TextStyle(color: Colors.white)),
+                  onPressed: () async {
+                    // Updates the total score for all the players in the game.
+                    var holes = await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .collection('scorecards')
+                        .doc(widget._scorecard_id)
+                        .collection('holes')
+                        .get();
+                    var scorecard = await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .collection('scorecards')
+                        .doc(widget._scorecard_id)
+                        .get();
 
-                scorecardPlayers[playerIndex]['total_score'] = totalScore;
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser.uid)
-                    .collection('scorecards')
-                    .doc(widget._scorecard_id)
-                    .update({'players': scorecardPlayers});
-              }
+                    var scorecardPlayers = scorecard['players'];
 
-              Nav.pop(context);
-            },
-          )
-        ],
-        title: Container(
-          child: Row(
-            children: [
-              Icon(Icons.golf_course_outlined),
-              SizedBox(width: 8.0),
-              Text("Gold Course Name")
-            ],
-          ),
-        ),
-      ),
-      body: _newBody(context),
-    );
+                    for (int playerIndex = 0;
+                        playerIndex < scorecardPlayers.length;
+                        playerIndex++) {
+                      int totalScore = 0;
+                      for (int holeIndex = 0;
+                          holeIndex < holes.docs.length;
+                          holeIndex++) {
+                        totalScore += holes.docs[holeIndex]['players']
+                            [playerIndex]['strokes'];
+                      }
+
+                      scorecardPlayers[playerIndex]['total_score'] = totalScore;
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser.uid)
+                          .collection('scorecards')
+                          .doc(widget._scorecard_id)
+                          .update({'players': scorecardPlayers});
+                    }
+
+                    Nav.pop(context);
+                  },
+                )
+              ],
+              title: Container(
+                child: Row(
+                  children: [
+                    Icon(Icons.golf_course_outlined),
+                    SizedBox(width: 8.0),
+                    Text(scoreCardTitle)
+                  ],
+                ),
+              ),
+            ),
+            body: _newBody(context),
+          );
+        });
   }
 
   Widget _newBody(BuildContext context) {
